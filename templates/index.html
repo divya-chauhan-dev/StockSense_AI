@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Decision Support System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.1.1/dist/chartjs-chart-financial.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📈 Stock Market Decision Support</h1>
+            <p class="subtitle">AI-Powered Analysis with Technical Indicators</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="tickerInput" placeholder="Enter stock ticker (e.g., AAPL)" maxlength="5">
+                <button id="analyzeBtn" onclick="analyzeStock()">
+                    <span class="btn-text">Analyze</span>
+                    <span class="btn-loader hidden"></span>
+                </button>
+            </div>
+            <div class="popular-stocks">
+                <span>Popular:</span>
+                <button class="stock-tag" onclick="setTicker('AAPL')">AAPL</button>
+                <button class="stock-tag" onclick="setTicker('MSFT')">MSFT</button>
+                <button class="stock-tag" onclick="setTicker('GOOGL')">GOOGL</button>
+                <button class="stock-tag" onclick="setTicker('AMZN')">AMZN</button>
+                <button class="stock-tag" onclick="setTicker('TSLA')">TSLA</button>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="error-message hidden"></div>
+
+        <div id="resultsSection" class="results-section hidden">
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <span class="metric-label">Ticker</span>
+                    <span class="metric-value" id="metricTicker">-</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Price</span>
+                    <span class="metric-value" id="metricPrice">-</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Date</span>
+                    <span class="metric-value" id="metricDate">-</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Model Accuracy</span>
+                    <span class="metric-value" id="metricAccuracy">-</span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="recommendation-panel">
+                    <h2>Recommendation</h2>
+                    <div id="recommendationBox" class="recommendation-box">
+                        <div class="rec-icon" id="recIcon">-</div>
+                        <div class="rec-text" id="recText">-</div>
+                        <div class="rec-confidence">
+                            <span>Confidence:</span>
+                            <span id="recConfidence">-</span>
+                        </div>
+                        <div class="rec-score">
+                            <span>Score:</span>
+                            <span id="recScore">-</span>
+                        </div>
+                    </div>
+
+                    <h3>ML Prediction</h3>
+                    <div class="ml-prediction" id="mlPrediction">
+                        <div class="ml-direction" id="mlDirection">-</div>
+                        <div class="ml-probability">
+                            <span>Probability:</span>
+                            <span id="mlProbability">-</span>
+                        </div>
+                    </div>
+
+                    <h3>Signal Breakdown</h3>
+                    <div class="signals-list" id="signalsList"></div>
+                </div>
+
+                <div class="charts-panel">
+                    <div class="chart-container">
+                        <h3>Price Chart</h3>
+                        <canvas id="priceChart"></canvas>
+                    </div>
+                    <div class="indicators-row">
+                        <div class="indicator-chart">
+                            <h4>RSI</h4>
+                            <canvas id="rsiChart"></canvas>
+                        </div>
+                        <div class="indicator-chart">
+                            <h4>MACD</h4>
+                            <canvas id="macdChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Analyzing stock data...</p>
+                <p class="loading-sub">Training ML model and calculating indicators</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>⚠️ <strong>Disclaimer:</strong> This is for educational purposes only. Not financial advice.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

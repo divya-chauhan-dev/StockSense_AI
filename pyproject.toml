@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stock-predictor"
+version = "0.1.0"
+description = "AI-Driven Stock Market Decision Support System with Technical Indicator Fusion"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "yfinance>=0.2.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "xgboost>=2.0.0",
+    "scikit-learn>=1.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["stock_predictor*"]
